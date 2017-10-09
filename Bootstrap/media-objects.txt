@@ -1,0 +1,44 @@
+Media Objects
+
+Used to build repetitive components w/ content that doesn't wrap around some item
+Think comments/replies, facebook stories, tweets, etc. that all have user image
+
+Structure
+
+.media
+  .d-flex .mr-3 (d-flex fixes flex display bug on IE10-11 and mr-3 set margin-right)
+  .media-body
+    div
+
+Can be nested indefinitely to make reply chain, groupings, etc
+
+.media
+  .d-flex
+  .media-body
+    .media
+      .d-flex
+      .media-body
+
+Alignment
+  Can align media item with align-self-start/center/end
+
+  .media
+    .d-flex .align-self-center
+    .media-body
+
+  Can change order by changing HTML itself
+
+  .media
+    .media-body
+    .d-flex
+
+As Lists
+  Can use media objects in lots of places, as lists for example
+
+  ol.list-unstyled (list-unstyled clears any list styling CSS)
+    li.media
+      .d-flex
+      .media-body
+    li.media
+      .media-body
+      .d-flex

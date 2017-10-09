@@ -1,0 +1,55 @@
+Breakpoints
+  // Small devices (landscape phones, 576px and up)
+  @media (min-width: 576px) { ... }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) { ... }
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) { ... }
+
+  // Extra large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) { ... }
+
+
+
+  Sass Mixins
+    @include media-breakpoint-only(xs) { ... }  @media (max-width: 575px) { ... }
+    @include media-breakpoint-only(sm) { ... }  @media (min-width: 576px) and (max-width: 767px) { ... }
+    @include media-breakpoint-only(md) { ... }  @media (min-width: 768px) and (max-width: 991px) { ... }
+    @include media-breakpoint-only(lg) { ... }  @media (min-width: 992px) and (max-width: 1199px) { ... }
+    @include media-breakpoint-only(xl) { ... }  @media (min-width: 1200px)
+
+    @include media-breakpoint-down(xs) { ... }  @media (max-width: 575px) { ... }
+    @include media-breakpoint-down(sm) { ... }  @media (max-width: 767px) { ... }
+    @include media-breakpoint-down(md) { ... }  @media (max-width: 991px) { ... }
+    @include media-breakpoint-down(lg) { ... }  @media (max-width: 1199px) { ... }
+
+    @include media-breakpoint-up(xs) { ... }  No media query since this is default
+    @include media-breakpoint-up(sm) { ... }  @media (min-width: 576px) { ... }
+    @include media-breakpoint-up(md) { ... }  @media (min-width: 768px) { ... }
+    @include media-breakpoint-up(lg) { ... }  @media (min-width: 992px) { ... }
+    @include media-breakpoint-up(xl) { ... }  @media (min-width: 1200px) { ... }
+
+
+
+Z-Index
+  $zindex-dropdown-backdrop:  990 !default;
+  $zindex-dropdown:          1000 !default;
+  $zindex-fixed:             1030 !default;
+  $zindex-sticky:            1030 !default;
+  $zindex-modal-backdrop:    1040 !default;
+  $zindex-modal:             1050 !default;
+  $zindex-popover:           1060 !default;
+  $zindex-tooltip:           1070 !default;
+
+
+
+Margin and padding
+
+Use m for margin and p for padding
+t, r, b, l for side
+# for amount
+
+  .mr-10 (margin-right 10 px)
+  .pb-md-20 (padding-bottom 20 px on greater than medium screens)

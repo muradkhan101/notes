@@ -1,0 +1,30 @@
+Three types: min, max, and min-max
+
+Min heap: value in node is smaller than the values in all its descendants
+
+Max heap: value in node is greater than all its descendants
+
+The min-max heap property is: each node at an even level in the tree is less than all of its descendants, while each node at an odd level in the tree is greater than all of its descendants
+
+Usefulness: a queue where you need to get the min (for min-heap) or max (for max-heap) in constant time
+	    min-max has the best of both
+	    can use for sorting
+
+Difference from binary-search tree:
+	The order of child nodes doesn't matter in heap
+	In binary-search tree right node > left node
+
+Implemented as array to reduce overhead of node classes
+To get indexes:
+	Parent: (i - 1) / 2
+	Left Child: i * 2 + 1
+	Right Child: i * 2 + 2
+
+Big O:
+	find-min/max: O(1)
+	delete-min/max: O(log n)
+	insert: O(log n)
+	decrease-key: O(log n)
+	merge: O (n)
+
+Other types of heaps: Brodal, binomial, fibonacci

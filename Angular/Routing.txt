@@ -1,0 +1,47 @@
+Routing can be used to make single-page-apps (SPAs)
+Back/forward buttons work since activity is logged in browser history
+
+Basics
+
+import { RouterModule, Routes } from '@angular/router'; (other modules there too)
+
+<base href>
+	Add a <base href="/"> as first element in <head> tag
+	Tells router how to compose navigation urls
+
+Configuration
+	When URL changes, Router looks for Route to display, no routes originally, must configure
+
+	const appRoutes: Routes = [
+	{ path: 'route1', component: Route1Component },
+	{ path: 'route2/:parameter', component: Route2Component},
+	{ 
+	   path: 'route3',
+	   component: Route3Component,
+	   data: { info: 'The third route'} // read-only data used to render component (breadcrumbs, titles)
+	},
+	{
+	   path: '', //base path
+	   redirectTo: '/heroes', //redirect elsewhere
+	   pathMatch: 'full' // Path needs to be exact match
+	},
+	{ path: '**', component: Page404Component } // ** is wildcard, matches everythign
+	];
+
+	@NgModule({
+	   imports: [
+	     RouterModule.forRoot(
+	       appRoutes,
+	       { enableTracing: true } // 
+	     )
+	   ]
+	})
+
+	Path matching happens in order from top to bottom, first match wins
+	Put more specific paths at top and general at bottom. End with wildcard to catch else
+
+Router outlet
+	After link match, component renders after <router-outlet></router-outlet>
+	Need to place that element manually
+
+

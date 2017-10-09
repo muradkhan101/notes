@@ -1,0 +1,81 @@
+Containers
+  Fixed-Width (.container) - have max-width that changes with breakpoint
+  Fluid (.container-fluid) - 100% width all the time
+
+  Way of centering content inside, made with flex-box
+  Rows are groups of columns that ensure columns are aligned properly
+  Content is in columns, only columns should be direct children of rows
+  Column sizing is based on breakpoints in basics.txt (xs, sm, md, lg, xl)
+  Rows split into 12 columns, with fluid widths
+  Use .no-gutters on .row to remove padding
+
+  Layout
+    .container (.container-fluid)
+      .row
+        .col-md-6 (for xs col, use col-#)
+        .col-md-4 (for equal sized cols, just use .col)
+        .col-md-2 (.col splits up space left around it, see below)
+      .row
+        .col-auto (use col-$size-auto for variable width content)
+        .col-6
+        .col-lg-auto
+      .row
+        .col
+        .col
+        .w-100 (line-break, breaks into multiple rows)
+        .col
+      .row
+        .col-12 .col-md-6 (starts stacked on mobile, switches to 50% at 768px width screen)
+        .col-8 .col-md-6 .col-xl-12 (switches to 100% width at 1200px)
+
+
+    Alignment
+      .container-fluid
+        .row .align-items-start (align items vertically)
+        .row .align-items-center
+        .row .align-items-end
+
+      .container-fluid
+        .row .justify-content-start (horizontal alignment)
+        .row .justify-content-center
+        .row .justify-content-end
+        .row .justify-content-around
+        .row .justify-content-between
+
+  Display Properties
+    Properties for most display styles (block, inline-block, none etc) and size (xs, sm, lg, etc)
+      .d-block
+      .d-sm-inline-block (displays as inline block for small and above)
+      .d-lg-none (hidden for large and above)
+
+  Ordering
+    Use to order columns by breakpoint
+    Numbers from 1 to 12
+      .col .order-1
+      .col .order-6
+
+  Nesting
+    Don't need new container, just new .row
+
+
+
+  Sass Customizations
+    Can customize column numbers and gutters
+      $grid-columns: 12 !default;
+      $grid-gutter-width: 30px !default;
+
+    Can customize breakpoints
+      $grid-breakpoints: (
+        xs: 0,
+        sm: 480px,
+        md: 768px,
+        lg: 1024px
+      );
+
+      $container-max-widths: (
+        sm: 420px,
+        md: 720px,
+        lg: 960px
+      );
+
+    Need to recompile if any SASS variables or mix-ins are changed

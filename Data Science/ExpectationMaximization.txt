@@ -1,0 +1,104 @@
+Expectation Maximization
+
+
+Probalistic Models (defined on data):
+Bayes
+Logistic
+Least squares/ridge regression (ML and MAP)
+Bayesian
+
+Non-probalistic:
+Perceptron
+Support vector machine
+Decision trees
+K-means
+
+Always have some objective function to maximize (greedy vs non-greedy, local vs global)
+
+Maximum Likelihood
+
+
+Start with:
+Some set of model parameters, Ø
+Set of data {x1, ..., xn}
+Probability distribution p(x|Ø)
+An I.I.D. assumption, xi ~ [iid] p(x|Ø)
+
+Maximum likelihood tries to find Ø to maximize the likelihood
+Øml = argmax[Ø] p(x1, ..., xn|Ø) =^(a)
+      argmax[Ø] ∏[i=1->n] p(xi|Ø) =^(b)
+      argmax[Ø] ∑ln( p(xi|Ø) )
+
+Other words: maximize the probability the data that data is correct given Ø
+   (a)	     Since, i.i.d. probability of total is just multiplying prob of each data point
+   (b)	     Take ln to split into addition for easier time
+Take derivative and set equal to 0 to solve for best Ø
+
+Coordinate Ascent
+
+Could split parameter into groups Ø1, Ø2 and max likelihood over both
+Ø1ml, Ø2ml = argmax[Ø1, Ø2] ∑ln( p(xi|Ø1,Ø2) )
+
+Can't optimize simultaneously, so hold one constant and max other, repeat
+Called coordinate ascent because you are maximizing probablity, not minimizing error
+
+Third situation: Ø1ml = argmax[Ø1] ∑ln( p(xi|Ø1) ), but p(xi|Ø1) is tricky to optimize
+	Could add second variable Ø2 so that ∑ln( p(xi,Ø2|Ø1) ) is easier to work with
+	Expectation maximization lets us max above
+
+
+
+Expectation Maximization Algorithm
+
+
+Let xi be in R^d, be a vector w/ missing data. Split data into two parts:
+	1) xi^o - observed portion (sub-vector of xi that is measured)
+	2) xi^m - missing portion (unknown sub-vector)
+	3) Missing dimensions can be different for different xi
+
+We assume that xi ~[iid] N(µ, ∑) (multi-variate gaussian) and want to solve
+	(i) µml, ∑ml = argmax[µ,∑] ∑[i=1->n] ln( p(xi^o|µ,∑) )
+
+This is tricly. However, if we knew xi^m (and therefore xi), then
+	µml, ∑ml = argmax[µ,∑] ∑[i=1->n] ln( p(xi^o,xi^m|µ,∑) )
+
+is very easy to optimize
+
+General Setup   for optimizing (i)
+
+We have two parameter sets Ø1, Ø2
+	p(x|Ø1) = ∫p(x,Ø2|Ø1)dØ2 (marginal distribution, integrating out Ø2, a hidden variable)
+	
+For previous example, we can show:
+	p(xi^o|µ,∑) = ∫p(xi^o,xi^m|µ,∑)dxi^m = N(µi^o,∑i^o)
+
+EM objective function
+
+Lets us optimize marginal p(x|Ø1) over Ø1
+Uses p(x, Ø2|Ø1) to make computation easier
+
+ln p(x|Ø1) = ∫{q(Ø2) * ln[ p(x,Ø2|Ø1) / q(Ø2)] }dØ2 + ∫{q(Ø2) * ln[ q(Ø2)/ p(Ø2|x, Ø1)] } dØ2
+
+Where q(Ø2) is any probability distribution
+      Assume we know p(Ø2|x, Ø1) meaning we can solve for Ø2 if we are given the rest of the info
+	
+	Call term 1, L, and term 2 Kullback-Leibler(KL) divergence
+	L is only function of Ø1 (Ø2 gets integrated out)
+	Assuming integral of L can be calculated
+
+	KL can be thought of as distance measured between two prob distributions (not real distance)
+	KL always >= 0 and only when q = p
+
+What does it mean to optimize ln p(x|Ø1) w.r.t. Ø1?
+One way to think is:
+	1) A sequence of values for Ø1 where ln p(x|Ø1^t) >= ln p(x|Ø1^t-1) , prob of x being right goes up
+	2) Want Ø1^t to converge to local max of ln p(x|Ø1)
+
+The EM Algorithm
+
+Given value Ø1^t, find value of Ø1^t+1 as follows:
+	E-step: Set qt(Ø2) = p(Ø2|xt, Ø1^t) and calculate
+		Lt(xt,Ø1) = ∫{qt( Ø2 ) * ln p(x, Ø2|Ø1) }dØ2 - ∫{qt( Ø2 ) * ln[ qt * Ø2 ] }
+	M-step: Set Ø1^t+1 = argmax[Ø1] Lt(xt, Ø1)		^ can ignore, since constant wrt Ø1
+
+

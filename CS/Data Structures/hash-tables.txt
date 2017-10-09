@@ -1,0 +1,40 @@
+Dictionary: Abstract Data Type (?)
+Maintain set of items
+	-insert
+	-delete
+	-search(key): return item or report doesn't exist
+O(log n) via AVL(i) tree
+
+(i) AVL trees are self-balancing binary search tree where the height of the child subtrees of any node differ by at most one. It is rebalanced if the difference is ever greater than 1
+    Lookup, insertion, and deletion take O(log n)
+
+Simple approach - Direct-access table:
+	Store items in array, indexed by key
+	Bad because,(1)  only works with int keys
+		    (2)  space
+
+Solution to (1): prehash
+	maps keys to non-negative integers
+	- in theory, keys are finite & discrete (string of bits)
+	  doesn't always happen in practice
+
+Solution to (2): hashing
+	- reduce universe U of all key (ints) down to reasonable set for table
+
+Collisions: w/ chaining
+	Worst case, get a linked list O(n)
+
+Hash function:
+	1) division method:
+		h(k) = k mod m
+		- works well when m is prime
+		- not good for powers of 2 or 10
+		- not good for both even
+	2) multiplication method:
+		h(k) = [ (a*k) mod 2^w ] >> (w-r), where a and k are bit representations
+		m = 2^r, r is some int
+		a should be odd and not close to power of 2
+	3) univeral hashing:
+		h(k) = [ (a*k + b) mod p] mod m
+		a and b are random numbers between (0, p-1) where p is prime
+		- for worst case keys, k1 + k2: Pr{h(k1) = h(k2)} = 1/m

@@ -1,0 +1,47 @@
+Clustering/K-Means
+
+Like K-Nearest Neighbors but we don't have true labels of data points
+We just have the inputs x
+Attempt to group data into k clusters
+Outputs vector of k possible assignments for each data point and
+   k mean vectors that define the center of the cluster
+
+Objective Functions for Clustering
+
+argmin(sum i->n(sum k->K[ {ci = k} ||xi - ul||^2  ])  )
+Means minimize the sum through all the data and clusters, if the point is in the cluster (ci=k) then add the Euclidean distance from the center of the cluster
+Or sum through each centroid k, and minimize the sum of the Euclidean distance of each point in each cluster it is assigned to
+
+Non-Convex, can't find optimal u and c, can only converge local optimum
+Can't take derivatives since c is a discrete variable, use iterative instead
+
+Coordinate Descent
+
+Split variable into two unnknown sets u and c
+Can't find optimal values at the same time, but
+	Fixing u, can find best c exactly
+	Fixing c, can find best u exactly
+Coordinate descent - hold one set of parameters fixed and optimize other
+	Keep swapping held and repeating until local maxima
+Algorithm:
+	Randomly initialize u
+	Iterate back-and-forth between
+		Given u, find best c {1, ... ,K} for i = 1, ... , n
+		Given c, find best vector u in R^d for k = 1, ..., K
+Iterate because finding better c, gives possibility for better u, and vice-versa
+Assignment Step:
+	Given {µ1, ..., µl}, update {c1, ..., cn}
+	L = ∑[k=1->K] {c1=k}||x1-µ}}^2 + ... + ∑[k=1->L]{cn=k}||xn-µk||^2
+	Means, minimize the sum of each clusters Euclidean distance
+	Pick {c1, ..., cn} to minimize L
+	Since each sum of ci is independent, minimize each one independently
+	Must iterate across each ci for every point and assign closest
+Update Step:
+	Given {c1, ..., cn} update {µ1, ... µK}
+	L = ∑[i=1->N] {ci=1}||xi-u1||^2 + ... + ∑[i=1->N] {ci=K}||xi-µK||^2
+	Means minimize sum of each set of points in each cluster by changing µ
+	Take derivative w/ respect to µK,
+	ends up taking the average of all the data that was assigned to the Kth centroid
+	
+
+m=µ,b=∫,w=∑

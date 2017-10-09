@@ -1,0 +1,41 @@
+function repeated(f, input, n) {
+    if (n === 0) return input;
+    else return repeated(f, f(input), n-1)
+}
+Allows you to repeat a certain function, f, on an input n number of times
+
+Ex1: repeated(x=>x+1, 2, 2) = 4
+Ex2: repeated(double(x=>x+1), 3, 2) = 6, where double is the function defined below
+
+function double(f) {
+    return function (x) {
+        return f(f(x)) 
+    }
+}
+Applies a function, f, to an input, x, two times
+Similar to repeated where n = 2
+
+Ex: double(x=>x+1, 2) = 4
+Ex2: double(double)(double)(x=>x+1)(0) = 16
+
+The chainability of these functions comes from return a second function that returns the final answers
+
+double(double) returns double(double(x))
+double(double)(inc) returns double(double(inc)) => 4 x inc(x)
+double(double)(inc)(2) returns 4 x inc(2) = 6
+
+
+ƒ repeated(f, n) {
+    return (x) => {
+        while (n > 0) {x = f(x); n--}
+        return x;
+    }
+}
+
+function repeated2(f, n) {
+    if (n <= 1) return x=>f(x)
+    else return compose(repeated2(f, n-1), f)
+}
+
+Both functions give similar results with the smoothed function.
+One is recursive form, other is iterative
